@@ -921,7 +921,7 @@ class Stock:
         list1 = self.lineitem_cat_total ('CF_N2T', -1)
         return list1
         
-    # Cash flow from operations ($)
+    # Income tax expense ($)
     def dollars_cftax (self):
         list_unplus  = self.unit_plus ()
         list_unminus = self.unit_minus ()
@@ -944,7 +944,100 @@ class Stock:
             c = c + 1
         return list1
 
+    def cfn2f_titles (self):
+        list1 = self.lineitem_cat_titles ('CF_N2F', 1)
+        return list1
+        
+    def cfn2f_spec (self):
+        list1 = self.lineitem_cat_spec ('CF_N2F', 1)
+        return list1
+    
+    def cfn2fplus (self):
+        list1 = self.lineitem_cat_total ('CF_N2F', 1)
+        return list1
+    
+    def cfn2fminus_titles (self):
+        list1 = self.lineitem_cat_titles ('CF_N2F', -1)
+        return list1
+        
+    def cfn2fminus_spec (self):
+        list1 = self.lineitem_cat_spec ('CF_N2F', -1)
+        return list1
+    
+    def cfn2fminus (self):
+        list1 = self.lineitem_cat_total ('CF_N2F', -1)
+        return list1
+        
+    # Interest expense, negative operating cash flows reclassified as finance ($)
+    def dollars_cfn2f (self):
+        list_unplus  = self.unit_plus ()
+        list_unminus = self.unit_minus ()
+        list_quantplus = self.cfn2fplus ()
+        list_quantminus = self.cfn2fminus ()
+        list1 = []
+        n_cols = len (list_quantplus)
+        c_min = 0
+        c_max = n_cols - 1
+        c = c_min
+        while c <= c_max:
+            try:
+                dollars = list_unplus [c] * list_quantplus [c] - list_unminus [c] * list_quantminus [c]
+            except:
+                try:
+                    dollars = list_unplus [c] * list_quantplus [c]
+                except:
+                    dollars = None
+            list1.append (dollars)
+            c = c + 1
+        return list1
 
+    def cfp2f_titles (self):
+        list1 = self.lineitem_cat_titles ('CF_P2F', 1)
+        return list1
+        
+    def cfp2f_spec (self):
+        list1 = self.lineitem_cat_spec ('CF_P2F', 1)
+        return list1
+    
+    def cfp2fplus (self):
+        list1 = self.lineitem_cat_total ('CF_P2F', 1)
+        return list1
+    
+    def cfp2fminus_titles (self):
+        list1 = self.lineitem_cat_titles ('CF_P2F', -1)
+        return list1
+        
+    def cfp2fminus_spec (self):
+        list1 = self.lineitem_cat_spec ('CF_P2F', -1)
+        return list1
+    
+    def cfp2fminus (self):
+        list1 = self.lineitem_cat_total ('CF_P2F', -1)
+        return list1
+        
+    # Interest income and cash flow adjustments for changes in current liabilities
+    # Positive operating cash flow reclassified as finance ($)
+    def dollars_cfp2f (self):
+        list_unplus  = self.unit_plus ()
+        list_unminus = self.unit_minus ()
+        list_quantplus = self.cfp2fplus ()
+        list_quantminus = self.cfp2fminus ()
+        list1 = []
+        n_cols = len (list_quantplus)
+        c_min = 0
+        c_max = n_cols - 1
+        c = c_min
+        while c <= c_max:
+            try:
+                dollars = list_unplus [c] * list_quantplus [c] - list_unminus [c] * list_quantminus [c]
+            except:
+                try:
+                    dollars = list_unplus [c] * list_quantplus [c]
+                except:
+                    dollars = 0
+            list1.append (dollars)
+            c = c + 1
+        return list1
 
 
 
@@ -1731,4 +1824,14 @@ print mystock.dollars_cfo()
 
 print "\ndollars_cftax\n"
 print mystock.dollars_cftax()
+
+print "\ncf2fplus\n"
+print mystock.cfn2fplus ()
+
+
+print "\ndollars_cfn2f\n"
+print mystock.dollars_cfn2f()
+
+print "\ndollars_cfp2f\n"
+print mystock.dollars_cfp2f()
 
