@@ -1,6 +1,6 @@
 LIAB_ot = official total liabilities
 ASSET_ot = official total assets
-EQ_o = official shareholder's equity
+EQ_ot = official total shareholder's equity
 
 LIAB_ps = nonconvertible preferred stock
 LIAB_oth = other liabilities not included in the official total
@@ -15,13 +15,13 @@ NET_c = net liquid assets, all convertibles are converted
 LIAB_ot = ASSET_ot - EQ_o
 
 LIAB_dtu = LIAB_ot + LIAB_ps + LIAB_oth
-LIAB_dtc = LIAB_ot + LIAB_ps + LIAB_oth + LIAB_conv
+LIAB_dtc = LIAB_ot + LIAB_ps + LIAB_oth - LIAB_conv
 
 NET_u = LIQ_t - LIAB_dtu
 NET_c = LIQ_t - LIAB_dtc
 
 net liquidity = liquid assets - total liabilities
 
-total liabilities = total assets - shareholder's equity
+total liabilities = total assets - total shareholder's equity
 
 
